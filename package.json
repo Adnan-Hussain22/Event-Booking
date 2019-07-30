@@ -1,0 +1,19 @@
+{
+  "name": "Event-Booking",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Adnan-Hussain22/Event-Booking",
+  "author": "Adnan Hussain",
+  "license": "MIT",
+  "scripts": {
+    "start":"node app.js",
+    "dev":"nodemon app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}

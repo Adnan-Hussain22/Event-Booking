@@ -3,3 +3,4 @@ node_modules
 apidoc
 yarn.lock
 package-lock.json
+nodemon.json

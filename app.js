@@ -1,10 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const graphqlHttp = require('express-graphql');
+const mongoose = require('mongoose');
+const { Event } = require('./models');
 const { buildSchema } = require('graphql');
 const PORT = 3000;
 const app = express();
-const events = [];
 app.use(bodyParser.json());
 
 app.use(
@@ -32,7 +33,7 @@ app.use(
             }
 
             type RootMutation {
-                createEvent(input: CreatEventInput!): [Event!]!
+                createEvent(input: CreatEventInput!): Event!
             }
 
             schema {
@@ -42,25 +43,50 @@ app.use(
         `),
 		rootValue: {
 			events: () => {
-				return events;
+				return Event.find()
+					.then((events) => {
+						return events.map((event) => {
+							return { ...event._doc, _id: event.id };
+						});
+					})
+					.catch((err) => {
+						throw err;
+					});
 			},
 			createEvent: (args) => {
 				const { title, description, price, date } = args.input;
-				const event = {
-					_id: Math.random().toString(),
+				const event = new Event({
 					title,
 					description,
 					price,
-					date
-				};
-                events.push(event);
-                return events
+					date: new Date(date)
+				});
+				return event
+					.save()
+					.then((result) => {
+						return { ...result._doc, _id: result.id };
+					})
+					.catch((err) => {
+						console.log('new doc err==>', err);
+						throw err;
+					});
 			}
 		},
 		graphiql: true
 	})
 );
 
-app.listen(PORT, () => {
-	console.log('The server is listening to port ' + PORT);
-});
+mongoose
+	.connect(
+		`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@bookingevent-5rziv.mongodb.net/${process
+			.env.MONGO_DB}?retryWrites=true&w=majority`,
+		{
+			useNewUrlParser: true
+		}
+	)
+	.then(() => {
+		app.listen(PORT, () => {
+			console.log('The server is listening to port ' + PORT);
+		});
+	})
+	.catch((err) => console.log('db error==>', err));

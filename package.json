@@ -6,8 +6,7 @@
   "author": "Adnan Hussain",
   "license": "MIT",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "nodemon ."
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

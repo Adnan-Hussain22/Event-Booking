@@ -20,8 +20,9 @@ const eventSchema = new Schema(
 			required: true
 		},
 		creator: {
+			ref: 'User',
 			type: Schema.Types.ObjectId,
-			ref: 'User'
+			required: true
 		}
 	},
 	{ versionKey: false }

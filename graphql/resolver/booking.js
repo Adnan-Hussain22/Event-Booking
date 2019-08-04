@@ -1,16 +1,22 @@
 const { Booking } = require('../../models');
 const { populateEvent, populateBooking } = require('./populators');
 module.exports = {
-	bookings: async () => {
+	bookings: async (args, req) => {
 		try {
+			if (!req.isAuth) {
+				throw new Error('User not authenticated!');
+			}
 			const bookings = await Booking.find();
 			return bookings.map((booking) => populateBooking(booking));
 		} catch (err) {
 			throw err;
 		}
 	},
-	bookEvent: async (args) => {
+	bookEvent: async (args, req) => {
 		try {
+			if (!req.isAuth) {
+				throw new Error('User not authenticated!');
+			}
 			const { eventId } = args;
 			const booking = new Booking({
 				user: '5d46a32a74813a135c02a8df',

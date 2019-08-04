@@ -9,8 +9,12 @@ module.exports = {
 			throw err;
 		}
 	},
-	createEvent: async (args) => {
+	createEvent: async (args, req) => {
 		try {
+			if (!req.isAuth) {
+				throw new Error('User not authenticated!');
+			}
+
 			const { title, description, price, date } = args.input;
 			const event = new Event({
 				title,

@@ -19,7 +19,7 @@ module.exports = {
 			}
 			const { eventId } = args;
 			const booking = new Booking({
-				user: '5d46a32a74813a135c02a8df',
+				user: req.userId,
 				event: eventId
 			});
 			const result = await booking.save();

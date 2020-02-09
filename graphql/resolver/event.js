@@ -20,8 +20,8 @@ module.exports = {
 				title,
 				description,
 				price,
-				date: new Date(date),
-				creator: '5d46a32a74813a135c02a8df'
+				date: new Date(eventInput.date),
+        		creator: req.userId
 			});
 			const eventResult = await event.save();
 			const user = await User.findById('5d46a32a74813a135c02a8df');

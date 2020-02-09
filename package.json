@@ -1,12 +1,13 @@
 {
-  "name": "Event-Booking",
+  "name": "event_booking",
   "version": "1.0.0",
   "main": "app.js",
   "repository": "https://github.com/Adnan-Hussain22/Event-Booking",
   "author": "Adnan Hussain",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon ."
+    "start": "node .",
+    "dev": "nodemon ."
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

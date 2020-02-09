@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User } = require('../../models');
+const { secretKey } = require("../../keys");
+
 module.exports = {
 	createUser: async (args) => {
 		try {
@@ -29,7 +31,7 @@ module.exports = {
 			const isEqual = await bcrypt.compare(password, user.password);
 			if (!isEqual) throw new Error('Invalid creadential!');
 
-			const token = jwt.sign({ userId: user.id, email }, 'secretKey', {
+			const token = jwt.sign({ userId: user.id, email }, secretKey, {
 				expiresIn: '1h'
 			});
 			return { userId: user.id, token, tokenExpiration: 1 };
